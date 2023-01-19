@@ -1,6 +1,7 @@
 package com.davixmns.workshopmongodb.resources;
 
 import com.davixmns.workshopmongodb.domain.User;
+import com.davixmns.workshopmongodb.dto.UserDTO;
 import com.davixmns.workshopmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ public class UserResource {
     private UserService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<User>> findAll(){
-        return ResponseEntity.ok().body(service.findAll());
+    public ResponseEntity<List<UserDTO>> findAll(){
+        List<User> users = service.findAll();
+        List<UserDTO> userDTOS = users.stream().map(UserDTO::new).toList();
+        return ResponseEntity.ok().body(userDTOS);
     }
 }
