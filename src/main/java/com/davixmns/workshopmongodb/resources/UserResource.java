@@ -1,5 +1,6 @@
 package com.davixmns.workshopmongodb.resources;
 
+import com.davixmns.workshopmongodb.domain.Post;
 import com.davixmns.workshopmongodb.domain.User;
 import com.davixmns.workshopmongodb.dto.UserDTO;
 import com.davixmns.workshopmongodb.services.UserService;
@@ -50,6 +51,12 @@ public class UserResource {
         user.setId(id);
         service.update(user);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 
 }
